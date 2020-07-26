@@ -20,15 +20,17 @@ namespace ImageEditorWinForm
         {
             InitializeComponent();
 
-            img = new Bitmap(pictureBox1.Image);
+            img = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+
+            pictureBox1.Image = img;
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (mouseIsDown)
+            int drawWidth = 10;
+            if (mouseIsDown && 0 + drawWidth / 2 < e.X && e.X < img.Width - drawWidth / 2 && 0 + drawWidth / 2 < e.Y && e.Y < img.Height - drawWidth / 2)
             {
-                img.SetPixel(e.X, e.Y, Color.Red);
-
+                draw(e.X, e.Y, drawWidth);
                 pictureBox1.Image = img;
             }
         }
@@ -41,6 +43,22 @@ namespace ImageEditorWinForm
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             mouseIsDown = false;
+        }
+
+        private void draw(int x, int y, int drawWidth)
+        {
+            for (int width = 0; width < drawWidth; width ++)
+            {
+                for (int height = 0; height < drawWidth; height ++)
+                {
+                    int imgx = x - drawWidth / 2 + width;
+                    int imgy = y - drawWidth / 2 + height;
+
+                    if (img.GetPixel(imgx,imgy) != Color.Red)
+                        img.SetPixel(imgx, imgy, Color.Red);
+                }
+            }
+            
         }
     }
 }
