@@ -15,19 +15,22 @@ namespace ImageEditorWinForm
 
         public Bitmap img;
         private bool mouseIsDown;
+        public int drawWidth;
+        public Color colorDraw;
 
         public Form1()
         {
             InitializeComponent();
 
             img = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            drawWidth = trackBar1.Value;
+            colorDraw = Color.White;
 
             pictureBox1.Image = img;
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            int drawWidth = 10;
             if (mouseIsDown && 0 + drawWidth / 2 < e.X && e.X < img.Width - drawWidth / 2 && 0 + drawWidth / 2 < e.Y && e.Y < img.Height - drawWidth / 2)
             {
                 draw(e.X, e.Y, drawWidth);
@@ -54,11 +57,24 @@ namespace ImageEditorWinForm
                     int imgx = x - drawWidth / 2 + width;
                     int imgy = y - drawWidth / 2 + height;
 
-                    if (img.GetPixel(imgx,imgy) != Color.Red)
-                        img.SetPixel(imgx, imgy, Color.Red);
+                    if (img.GetPixel(imgx,imgy) != colorDraw)
+                        img.SetPixel(imgx, imgy, colorDraw);
                 }
             }
             
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            drawWidth = trackBar1.Value;
+        }
+
+        private void pbColorWheel_MouseClick(object sender, MouseEventArgs e)
+        {
+            int x = pbColorWheel.Image.Width * e.X / pbColorWheel.Width;
+            int y = pbColorWheel.Image.Height * e.Y / pbColorWheel.Height;
+
+            colorDraw = ((Bitmap)pbColorWheel.Image).GetPixel(x, y);
         }
     }
 }
