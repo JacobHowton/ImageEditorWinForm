@@ -12,35 +12,35 @@ namespace ImageEditorWinForm
 {
     public partial class Form1 : Form
     {
+
+        public Bitmap img;
+        private bool mouseIsDown;
+
         public Form1()
         {
-            Console.Write("Draw");
             InitializeComponent();
+
+            img = new Bitmap(pictureBox1.Image);
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            
-            this.Cursor = new Cursor(Cursor.Current.Handle);
-
-            int xCoordinate = Cursor.Position.X;
-            int yCoordinate = Cursor.Position.Y;
-
-            pictureBox1.Image = pictureBox1.Image;
-
-            ((Bitmap)pictureBox1.Image).SetPixel(10, 10, Color.FromArgb(255, 255, 0));
-
-            Console.Write("Draw");
-
-           /* pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            int x, y;
-            for (y = 0; y < 200; y++)
+            if (mouseIsDown)
             {
-                for (x = 0; x < 200; x++)
-                {
-                    ((Bitmap)pictureBox1.Image).SetPixel(x, y, Color.FromArgb(255, 255, 0));
-                }
-            }*/
+                img.SetPixel(e.X, e.Y, Color.Red);
+
+                pictureBox1.Image = img;
+            }
+        }
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseIsDown = true;
+        }
+
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseIsDown = false;
         }
     }
 }
