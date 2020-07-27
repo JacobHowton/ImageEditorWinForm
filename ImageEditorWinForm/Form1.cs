@@ -18,6 +18,19 @@ namespace ImageEditorWinForm
         public int drawWidth;
         public Color colorDraw;
 
+        public enum DrawMode {pen, square};
+        public DrawMode drawMode;
+
+        public struct pt
+        {
+            public int x;
+            public int y;
+        };
+
+        public pt pt1;
+        public pt pt2;
+
+
         public Form1()
         {
             InitializeComponent();
@@ -25,6 +38,7 @@ namespace ImageEditorWinForm
             img = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             drawWidth = trackBar1.Value;
             colorDraw = Color.White;
+            drawMode = DrawMode.square;
 
             pictureBox1.Image = img;
         }
@@ -33,18 +47,37 @@ namespace ImageEditorWinForm
         {
             if (mouseIsDown && 0 + drawWidth / 2 < e.X && e.X < img.Width - drawWidth / 2 && 0 + drawWidth / 2 < e.Y && e.Y < img.Height - drawWidth / 2)
             {
-                draw(e.X, e.Y, drawWidth);
+                if (drawMode == DrawMode.pen)
+                {
+                    draw(e.X, e.Y, drawWidth);
+                }
+
                 pictureBox1.Image = img;
             }
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
+            if (drawMode == DrawMode.square)
+            {
+                pt1.x = e.X;
+                pt1.y = e.Y;
+            }
+
             mouseIsDown = true;
         }
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
+            if (drawMode == DrawMode.square)
+            {
+                pt2.x = e.X;
+                pt2.y = e.Y;
+
+                drawSquare(drawWidth);
+
+                pictureBox1.Image = img;
+            }
             mouseIsDown = false;
         }
 
@@ -62,6 +95,35 @@ namespace ImageEditorWinForm
                 }
             }
             
+        }
+
+
+        private void drawSquare(int drawWidth)
+        {
+            int x1 = Math.Min(pt1.x, pt2.x);
+            int x2 = Math.Max(pt1.x, pt2.x);
+            int y1 = Math.Min(pt1.y, pt2.y);
+            int y2 = Math.Max(pt1.y, pt2.y);
+
+            for (int x = x1; x < x2; x ++)
+            {
+                draw(x, y1, drawWidth);
+            }
+
+            for (int x = x1; x < x2; x++)
+            {
+                draw(x, y2, drawWidth);
+            }
+
+            for (int y = y1; y < y2; y++)
+            {
+                draw(x1, y, drawWidth);
+            }
+
+            for (int y = y1; y < y2; y++)
+            {
+                draw(x2, y, drawWidth);
+            }
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)

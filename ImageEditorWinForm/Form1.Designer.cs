@@ -41,9 +41,10 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.pictureBox1.Location = new System.Drawing.Point(18, 13);
+            this.pictureBox1.Location = new System.Drawing.Point(24, 16);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(681, 401);
+            this.pictureBox1.Size = new System.Drawing.Size(908, 494);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
@@ -53,11 +54,12 @@
             // trackBar1
             // 
             this.trackBar1.LargeChange = 1;
-            this.trackBar1.Location = new System.Drawing.Point(756, 50);
+            this.trackBar1.Location = new System.Drawing.Point(1008, 62);
+            this.trackBar1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trackBar1.Maximum = 50;
             this.trackBar1.Minimum = 1;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(104, 45);
+            this.trackBar1.Size = new System.Drawing.Size(139, 56);
             this.trackBar1.TabIndex = 1;
             this.trackBar1.Value = 3;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
@@ -65,18 +67,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(783, 34);
+            this.label1.Location = new System.Drawing.Point(1044, 42);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(52, 13);
+            this.label1.Size = new System.Drawing.Size(67, 17);
             this.label1.TabIndex = 2;
             this.label1.Text = "DrawSize";
             // 
             // pbColorWheel
             // 
             this.pbColorWheel.Image = ((System.Drawing.Image)(resources.GetObject("pbColorWheel.Image")));
-            this.pbColorWheel.Location = new System.Drawing.Point(705, 250);
+            this.pbColorWheel.Location = new System.Drawing.Point(940, 308);
+            this.pbColorWheel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pbColorWheel.Name = "pbColorWheel";
-            this.pbColorWheel.Size = new System.Drawing.Size(196, 164);
+            this.pbColorWheel.Size = new System.Drawing.Size(261, 202);
             this.pbColorWheel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbColorWheel.TabIndex = 3;
             this.pbColorWheel.TabStop = false;
@@ -84,13 +88,14 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(913, 450);
+            this.ClientSize = new System.Drawing.Size(1217, 554);
             this.Controls.Add(this.pbColorWheel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.pictureBox1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
