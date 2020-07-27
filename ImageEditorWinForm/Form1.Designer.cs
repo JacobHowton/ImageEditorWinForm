@@ -45,10 +45,9 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.pictureBox1.Location = new System.Drawing.Point(24, 16);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox1.Location = new System.Drawing.Point(18, 13);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(908, 494);
+            this.pictureBox1.Size = new System.Drawing.Size(681, 401);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
@@ -59,12 +58,11 @@
             // trackBar1
             // 
             this.trackBar1.LargeChange = 1;
-            this.trackBar1.Location = new System.Drawing.Point(1000, 65);
-            this.trackBar1.Margin = new System.Windows.Forms.Padding(4);
+            this.trackBar1.Location = new System.Drawing.Point(750, 53);
             this.trackBar1.Maximum = 50;
             this.trackBar1.Minimum = 1;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(139, 56);
+            this.trackBar1.Size = new System.Drawing.Size(104, 45);
             this.trackBar1.TabIndex = 1;
             this.trackBar1.Value = 3;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
@@ -72,20 +70,18 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1034, 44);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(776, 36);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(67, 17);
+            this.label1.Size = new System.Drawing.Size(52, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "DrawSize";
             // 
             // pbColorWheel
             // 
             this.pbColorWheel.Image = ((System.Drawing.Image)(resources.GetObject("pbColorWheel.Image")));
-            this.pbColorWheel.Location = new System.Drawing.Point(940, 308);
-            this.pbColorWheel.Margin = new System.Windows.Forms.Padding(4);
+            this.pbColorWheel.Location = new System.Drawing.Point(705, 250);
             this.pbColorWheel.Name = "pbColorWheel";
-            this.pbColorWheel.Size = new System.Drawing.Size(261, 202);
+            this.pbColorWheel.Size = new System.Drawing.Size(196, 164);
             this.pbColorWheel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbColorWheel.TabIndex = 3;
             this.pbColorWheel.TabStop = false;
@@ -93,9 +89,10 @@
             // 
             // btn_pen
             // 
-            this.btn_pen.Location = new System.Drawing.Point(1039, 147);
+            this.btn_pen.Location = new System.Drawing.Point(779, 119);
+            this.btn_pen.Margin = new System.Windows.Forms.Padding(2);
             this.btn_pen.Name = "btn_pen";
-            this.btn_pen.Size = new System.Drawing.Size(75, 23);
+            this.btn_pen.Size = new System.Drawing.Size(56, 19);
             this.btn_pen.TabIndex = 4;
             this.btn_pen.Text = "Pen";
             this.btn_pen.UseVisualStyleBackColor = true;
@@ -103,9 +100,10 @@
             // 
             // btn_square
             // 
-            this.btn_square.Location = new System.Drawing.Point(1039, 176);
+            this.btn_square.Location = new System.Drawing.Point(779, 143);
+            this.btn_square.Margin = new System.Windows.Forms.Padding(2);
             this.btn_square.Name = "btn_square";
-            this.btn_square.Size = new System.Drawing.Size(75, 23);
+            this.btn_square.Size = new System.Drawing.Size(56, 19);
             this.btn_square.TabIndex = 5;
             this.btn_square.Text = "Square";
             this.btn_square.UseVisualStyleBackColor = true;
@@ -114,9 +112,10 @@
             // btn_circle
             // 
             this.btn_circle.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_circle.Location = new System.Drawing.Point(1039, 205);
+            this.btn_circle.Location = new System.Drawing.Point(779, 167);
+            this.btn_circle.Margin = new System.Windows.Forms.Padding(2);
             this.btn_circle.Name = "btn_circle";
-            this.btn_circle.Size = new System.Drawing.Size(75, 23);
+            this.btn_circle.Size = new System.Drawing.Size(56, 19);
             this.btn_circle.TabIndex = 6;
             this.btn_circle.Text = "Circle";
             this.btn_circle.UseVisualStyleBackColor = false;
@@ -125,9 +124,10 @@
             // btn_fill
             // 
             this.btn_fill.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_fill.Location = new System.Drawing.Point(1039, 234);
+            this.btn_fill.Location = new System.Drawing.Point(779, 190);
+            this.btn_fill.Margin = new System.Windows.Forms.Padding(2);
             this.btn_fill.Name = "btn_fill";
-            this.btn_fill.Size = new System.Drawing.Size(75, 23);
+            this.btn_fill.Size = new System.Drawing.Size(56, 19);
             this.btn_fill.TabIndex = 7;
             this.btn_fill.Text = "Fill";
             this.btn_fill.UseVisualStyleBackColor = false;
@@ -135,9 +135,9 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1217, 554);
+            this.ClientSize = new System.Drawing.Size(913, 450);
             this.Controls.Add(this.btn_fill);
             this.Controls.Add(this.btn_circle);
             this.Controls.Add(this.btn_square);
@@ -146,7 +146,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.pictureBox1);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

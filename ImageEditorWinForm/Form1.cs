@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,7 +20,7 @@ namespace ImageEditorWinForm
         public int drawWidth;
         public Color colorDraw;
 
-        public enum DrawMode {pen, square, circle, fill};
+        public enum DrawMode { pen, square, circle, fill };
         public DrawMode drawMode;
 
         public struct pt
@@ -26,7 +28,7 @@ namespace ImageEditorWinForm
             public int x;
             public int y;
 
-            public pt (int xnew, int ynew)
+            public pt(int xnew, int ynew)
             {
                 this.x = xnew;
                 this.y = ynew;
@@ -45,6 +47,13 @@ namespace ImageEditorWinForm
             drawWidth = trackBar1.Value;
             colorDraw = Color.White;
             drawMode = DrawMode.pen;
+
+            using (Graphics gfx = Graphics.FromImage(img))
+            using (SolidBrush brush = new SolidBrush(Color.FromArgb(200, 200, 200)))
+            {
+                gfx.FillRectangle(brush, 0, 0, img.Width, img.Height);
+            }
+
 
             pictureBox1.Image = img;
         }
@@ -69,6 +78,13 @@ namespace ImageEditorWinForm
                 pt1.x = e.X;
                 pt1.y = e.Y;
             }
+
+            else if (drawMode == DrawMode.pen)
+            {
+                draw(e.X, e.Y);
+            }
+
+            pictureBox1.Image = img;
 
             mouseIsDown = true;
         }
@@ -102,17 +118,35 @@ namespace ImageEditorWinForm
 
         private void draw(int x, int y)
         {
-            for (int width = 0; width < drawWidth; width ++)
-            {
-                for (int height = 0; height < drawWidth; height ++)
-                {
-                    int imgx = x - drawWidth / 2 + width;
-                    int imgy = y - drawWidth / 2 + height;
 
-                    if (img.GetPixel(imgx,imgy) != colorDraw)
-                        img.SetPixel(imgx, imgy, colorDraw);
+            unsafe
+            {
+                BitmapData bitmapData = img.LockBits(new Rectangle(0, 0, img.Width, img.Height), ImageLockMode.ReadWrite, img.PixelFormat);
+                int bytesPerPixel = System.Drawing.Bitmap.GetPixelFormatSize(img.PixelFormat) / 8;
+                int heightInPixels = bitmapData.Height;
+                int widthInBytes = bitmapData.Width * bytesPerPixel;
+                byte* ptrFirstPixel = (byte*)bitmapData.Scan0;
+
+                for (int width = 0; width < drawWidth; width++)
+                {
+                    int imgy = y - drawWidth / 2 + width;
+
+                    byte* currentLine = ptrFirstPixel + (imgy * bitmapData.Stride);
+
+                    for (int height = 0; height < drawWidth; height ++)
+                    {
+                        int imgx = x - drawWidth / 2 + height;
+                        currentLine[imgx * bytesPerPixel] = (byte)colorDraw.B;
+                        currentLine[imgx * bytesPerPixel + 1] = (byte)colorDraw.G;
+                        currentLine[imgx * bytesPerPixel + 2] = (byte)colorDraw.R;
+                    }
                 }
+
+                img.UnlockBits(bitmapData);
             }
+
+            pictureBox1.Image = img;
+
         }
 
 
@@ -144,64 +178,84 @@ namespace ImageEditorWinForm
             }
         }
 
-        private void drawCircle()
+        private void drawCircle(Bitmap processedBitmap)
         {
+            MessageBox.Show("ok");
+            unsafe
+            {
+                BitmapData bitmapData = processedBitmap.LockBits(new Rectangle(0, 0, processedBitmap.Width, processedBitmap.Height), ImageLockMode.ReadWrite, processedBitmap.PixelFormat);
+                int bytesPerPixel = System.Drawing.Bitmap.GetPixelFormatSize(processedBitmap.PixelFormat) / 8;
+                int heightInPixels = bitmapData.Height;
+                int widthInBytes = bitmapData.Width * bytesPerPixel;
+                byte* ptrFirstPixel = (byte*)bitmapData.Scan0;
 
+                for (int y = 0; y < heightInPixels; y++)
+                {
+                    byte* currentLine = ptrFirstPixel + (y * bitmapData.Stride);
+                    for (int x = 0; x < widthInBytes; x = x + bytesPerPixel)
+                    {
+                        int oldBlue = currentLine[x];
+                        int oldGreen = currentLine[x + 1];
+                        int oldRed = currentLine[x + 2];
+
+                        // calculate new pixel value
+                        currentLine[x] = (byte)0;
+                        currentLine[x + 1] = (byte)0;
+                        currentLine[x + 2] = (byte)0;
+                    }
+                }
+                processedBitmap.UnlockBits(bitmapData);
+                pictureBox1.Image = processedBitmap;
+            }
         }
 
         private void fill(int x, int y)
         {
             Queue<pt> points = new Queue<pt>();
+
             pt centerPoint;
             centerPoint.x = x;
             centerPoint.y = y;
 
-            if(img.GetPixel(x,y) != colorDraw)
+            if (img.GetPixel(x, y) != colorDraw)
             {
                 points.Enqueue(centerPoint);
 
-                fillRecursive(points, img.GetPixel(x,y));
+                Color fillingColor = img.GetPixel(x, y);
+
+                while (points.Count > 0)
+                {
+                    pt currentPoint = points.Dequeue();
+
+                    img.SetPixel(currentPoint.x, currentPoint.y, colorDraw);
+
+                    if (img.GetPixel(currentPoint.x + 1, currentPoint.y) == fillingColor)
+                    {
+                        points.Enqueue(new pt(currentPoint.x + 1, currentPoint.y));
+                    }
+
+                    if (img.GetPixel(currentPoint.x - 1, currentPoint.y) == fillingColor)
+                    {
+                        points.Enqueue(new pt(currentPoint.x - 1, currentPoint.y));
+                    }
+
+                    if (img.GetPixel(currentPoint.x, currentPoint.y + 1) == fillingColor)
+                    {
+                        points.Enqueue(new pt(currentPoint.x, currentPoint.y + 1));
+                    }
+
+                    if (img.GetPixel(currentPoint.x, currentPoint.y - 1) == fillingColor)
+                    {
+                        points.Enqueue(new pt(currentPoint.x, currentPoint.y - 1));
+                    }
+
+                    pictureBox1.Image = img;
+
+                }
+
             }
         }
 
-        private void fillRecursive(Queue<pt> points, Color fillingColor)
-        {
-            pt currentPoint = points.Dequeue();
-
-            img.SetPixel(currentPoint.x, currentPoint.y, colorDraw);
-
-            if (img.GetPixel(currentPoint.x + 1, currentPoint.y) == fillingColor)
-            {
-                points.Enqueue(new pt(currentPoint.x + 1, currentPoint.y));
-            }
-
-            if (img.GetPixel(currentPoint.x - 1, currentPoint.y) == fillingColor)
-            {
-                points.Enqueue(new pt(currentPoint.x - 1, currentPoint.y));
-            }
-
-            if (img.GetPixel(currentPoint.x, currentPoint.y + 1) == fillingColor)
-            {
-                points.Enqueue(new pt(currentPoint.x, currentPoint.y + 1));
-            }
-
-            if (img.GetPixel(currentPoint.x, currentPoint.y - 1) == fillingColor)
-            {
-                points.Enqueue(new pt(currentPoint.x, currentPoint.y - 1));
-            }
-
-            //MessageBox.Show((points.Count).ToString(), "o");
-            
-            if (points.Count != 0)
-            {
-                fillRecursive(points, fillingColor);
-            }
-            else
-            {
-                pictureBox1.Image = img;
-            }
-
-        }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
@@ -229,6 +283,8 @@ namespace ImageEditorWinForm
         private void btn_circle_Click(object sender, EventArgs e)
         {
             drawMode = DrawMode.circle;
+            drawCircle(img);
+
         }
 
         private void btn_fill_Click(object sender, EventArgs e)
