@@ -180,33 +180,7 @@ namespace ImageEditorWinForm
 
         private void drawCircle(Bitmap processedBitmap)
         {
-            MessageBox.Show("ok");
-            unsafe
-            {
-                BitmapData bitmapData = processedBitmap.LockBits(new Rectangle(0, 0, processedBitmap.Width, processedBitmap.Height), ImageLockMode.ReadWrite, processedBitmap.PixelFormat);
-                int bytesPerPixel = System.Drawing.Bitmap.GetPixelFormatSize(processedBitmap.PixelFormat) / 8;
-                int heightInPixels = bitmapData.Height;
-                int widthInBytes = bitmapData.Width * bytesPerPixel;
-                byte* ptrFirstPixel = (byte*)bitmapData.Scan0;
-
-                for (int y = 0; y < heightInPixels; y++)
-                {
-                    byte* currentLine = ptrFirstPixel + (y * bitmapData.Stride);
-                    for (int x = 0; x < widthInBytes; x = x + bytesPerPixel)
-                    {
-                        int oldBlue = currentLine[x];
-                        int oldGreen = currentLine[x + 1];
-                        int oldRed = currentLine[x + 2];
-
-                        // calculate new pixel value
-                        currentLine[x] = (byte)0;
-                        currentLine[x + 1] = (byte)0;
-                        currentLine[x + 2] = (byte)0;
-                    }
-                }
-                processedBitmap.UnlockBits(bitmapData);
-                pictureBox1.Image = processedBitmap;
-            }
+            
         }
 
         private void fill(int x, int y)
@@ -217,43 +191,88 @@ namespace ImageEditorWinForm
             centerPoint.x = x;
             centerPoint.y = y;
 
-            if (img.GetPixel(x, y) != colorDraw)
+            unsafe
             {
-                points.Enqueue(centerPoint);
+                BitmapData bitmapData = img.LockBits(new Rectangle(0, 0, img.Width, img.Height), ImageLockMode.ReadWrite, img.PixelFormat);
+                int bytesPerPixel = System.Drawing.Bitmap.GetPixelFormatSize(img.PixelFormat) / 8;
+                int heightInPixels = bitmapData.Height;
+                int widthInBytes = bitmapData.Width * bytesPerPixel;
+                byte* ptrFirstPixel = (byte*)bitmapData.Scan0;
+                byte* currentLine = ptrFirstPixel + (y * bitmapData.Stride);
 
-                Color fillingColor = img.GetPixel(x, y);
-
-                while (points.Count > 0)
+                if (Color.FromArgb(currentLine[x * bytesPerPixel + 2], currentLine[x * bytesPerPixel + 1], currentLine[x * bytesPerPixel]) != colorDraw)
                 {
-                    pt currentPoint = points.Dequeue();
+                    int[,] visited = new int[img.Width, img.Height];
 
-                    img.SetPixel(currentPoint.x, currentPoint.y, colorDraw);
-
-                    if (img.GetPixel(currentPoint.x + 1, currentPoint.y) == fillingColor)
+                    for (int g = 0; g < img.Width; g++)
                     {
-                        points.Enqueue(new pt(currentPoint.x + 1, currentPoint.y));
+                        for (int h = 0; h < img.Height; h++)
+                        {
+                            visited[g, h] = 0;
+                        }
                     }
 
-                    if (img.GetPixel(currentPoint.x - 1, currentPoint.y) == fillingColor)
-                    {
-                        points.Enqueue(new pt(currentPoint.x - 1, currentPoint.y));
-                    }
+                    points.Enqueue(centerPoint);
 
-                    if (img.GetPixel(currentPoint.x, currentPoint.y + 1) == fillingColor)
-                    {
-                        points.Enqueue(new pt(currentPoint.x, currentPoint.y + 1));
-                    }
+                    Color fillingColor = Color.FromArgb(currentLine[x * bytesPerPixel + 2], currentLine[x * bytesPerPixel + 1], currentLine[x * bytesPerPixel]);
+                    int fillR = (currentLine[x * bytesPerPixel + 2]);
+                    int fillG = (currentLine[x * bytesPerPixel + 1]);
+                    int fillB = (currentLine[x * bytesPerPixel]);
 
-                    if (img.GetPixel(currentPoint.x, currentPoint.y - 1) == fillingColor)
-                    {
-                        points.Enqueue(new pt(currentPoint.x, currentPoint.y - 1));
-                    }
+                    Console.WriteLine(fillR + " " + fillG + " " + fillB);
 
-                    pictureBox1.Image = img;
+                    while (points.Count > 0)
+                    {
+                        pt currentPoint = points.Dequeue();
+
+                        currentLine = ptrFirstPixel + (currentPoint.y * bitmapData.Stride);
+
+                        currentLine[currentPoint.x * bytesPerPixel] = (byte)colorDraw.B;
+                        currentLine[currentPoint.x * bytesPerPixel + 1] = (byte)colorDraw.G;
+                        currentLine[currentPoint.x * bytesPerPixel + 2] = (byte)colorDraw.R;
+                        
+                        if (withinBounds(currentPoint.x + 1, currentPoint.y) && currentLine[(currentPoint.x + 1) * bytesPerPixel + 2] == fillR && currentLine[(currentPoint.x + 1) * bytesPerPixel + 1] == fillG && currentLine[(currentPoint.x + 1) * bytesPerPixel] == fillB && visited[currentPoint.x + 1, currentPoint.y] == 0)
+                        {
+                            points.Enqueue(new pt(currentPoint.x + 1, currentPoint.y));
+                            visited[currentPoint.x + 1, currentPoint.y] = 1;
+                        }
+
+                        if (withinBounds(currentPoint.x - 1, currentPoint.y) && currentLine[(currentPoint.x - 1) * bytesPerPixel + 2] == fillR && currentLine[(currentPoint.x - 1) * bytesPerPixel + 1] == fillG && currentLine[(currentPoint.x - 1) * bytesPerPixel] == fillB && visited[currentPoint.x - 1, currentPoint.y] == 0)
+                        {
+                            points.Enqueue(new pt(currentPoint.x - 1, currentPoint.y));
+                            visited[currentPoint.x - 1, currentPoint.y] = 1;
+                        }
+
+                        currentLine = ptrFirstPixel + ((currentPoint.y + 1) * bitmapData.Stride);
+                        if (withinBounds(currentPoint.x, currentPoint.y + 1) && currentLine[(currentPoint.x) * bytesPerPixel + 2] == fillR && currentLine[(currentPoint.x) * bytesPerPixel + 1] == fillG && currentLine[(currentPoint.x) * bytesPerPixel] == fillB && visited[currentPoint.x, currentPoint.y + 1] == 0)
+                        {
+                            points.Enqueue(new pt(currentPoint.x, currentPoint.y + 1));
+                            visited[currentPoint.x, currentPoint.y + 1] = 1;
+                        }
+
+                        currentLine = ptrFirstPixel + ((currentPoint.y - 1) * bitmapData.Stride);
+                        if (withinBounds(currentPoint.x, currentPoint.y - 1) && currentLine[(currentPoint.x) * bytesPerPixel + 2] == fillR && currentLine[(currentPoint.x) * bytesPerPixel + 1] == fillG && currentLine[(currentPoint.x) * bytesPerPixel] == fillB && visited[currentPoint.x, currentPoint.y - 1] == 0)
+                        {
+                            points.Enqueue(new pt(currentPoint.x, currentPoint.y - 1));
+                            visited[currentPoint.x, currentPoint.y - 1] = 1;
+                        }
+
+
+                    }
 
                 }
+                
+
+                img.UnlockBits(bitmapData);
+
+                pictureBox1.Image = img;
 
             }
+        }
+
+        private bool withinBounds(int x, int y)
+        {
+            return (x >= 0 && x < img.Width && y >= 0 && y < img.Height);
         }
 
 
