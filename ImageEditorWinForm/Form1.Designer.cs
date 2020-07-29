@@ -37,6 +37,7 @@
             this.btn_square = new System.Windows.Forms.Button();
             this.btn_circle = new System.Windows.Forms.Button();
             this.btn_fill = new System.Windows.Forms.Button();
+            this.tb_drawWidth = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorWheel)).BeginInit();
@@ -133,11 +134,21 @@
             this.btn_fill.UseVisualStyleBackColor = false;
             this.btn_fill.Click += new System.EventHandler(this.btn_fill_Click);
             // 
+            // tb_drawWidth
+            // 
+            this.tb_drawWidth.Location = new System.Drawing.Point(724, 53);
+            this.tb_drawWidth.Name = "tb_drawWidth";
+            this.tb_drawWidth.Size = new System.Drawing.Size(20, 20);
+            this.tb_drawWidth.TabIndex = 8;
+            this.tb_drawWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tb_drawWidth.TextChanged += new System.EventHandler(this.tb_drawWidth_TextChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(913, 450);
+            this.Controls.Add(this.tb_drawWidth);
             this.Controls.Add(this.btn_fill);
             this.Controls.Add(this.btn_circle);
             this.Controls.Add(this.btn_square);
@@ -166,6 +177,7 @@
         private System.Windows.Forms.Button btn_square;
         private System.Windows.Forms.Button btn_circle;
         private System.Windows.Forms.Button btn_fill;
+        private System.Windows.Forms.TextBox tb_drawWidth;
     }
 }
 

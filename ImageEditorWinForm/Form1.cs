@@ -45,6 +45,7 @@ namespace ImageEditorWinForm
 
             img = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             drawWidth = trackBar1.Value;
+            tb_drawWidth.Text = drawWidth.ToString();
             colorDraw = Color.White;
             drawMode = DrawMode.pen;
 
@@ -256,10 +257,7 @@ namespace ImageEditorWinForm
                             points.Enqueue(new pt(currentPoint.x, currentPoint.y - 1));
                             visited[currentPoint.x, currentPoint.y - 1] = 1;
                         }
-
-
                     }
-
                 }
                 
 
@@ -279,6 +277,7 @@ namespace ImageEditorWinForm
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             drawWidth = trackBar1.Value;
+            tb_drawWidth.Text = drawWidth.ToString();
         }
 
         private void pbColorWheel_MouseClick(object sender, MouseEventArgs e)
@@ -309,6 +308,23 @@ namespace ImageEditorWinForm
         private void btn_fill_Click(object sender, EventArgs e)
         {
             drawMode = DrawMode.fill;
+        }
+
+        private void tb_drawWidth_TextChanged(object sender, EventArgs e)
+        {
+            if (Int32.Parse(tb_drawWidth.Text) > 0 && Int32.Parse(tb_drawWidth.Text) <= 50)
+            {
+                drawWidth = Int32.Parse(tb_drawWidth.Text);
+                trackBar1.Value = drawWidth;
+            }
+            else if (Int32.Parse(tb_drawWidth.Text) > 50)
+            {
+                tb_drawWidth.Text = "50";
+            }
+            else if (Int32.Parse(tb_drawWidth.Text) < 1)
+            {
+                tb_drawWidth.Text = "1";
+            }
         }
     }
 }
