@@ -16,6 +16,8 @@ namespace ImageEditorWinForm
     {
 
         public Bitmap img;
+        public Bitmap imgTemp;
+
         private bool mouseIsDown;
         public int drawWidth;
         public Color colorDraw;
@@ -66,9 +68,34 @@ namespace ImageEditorWinForm
                 if (drawMode == DrawMode.pen)
                 {
                     draw(e.X, e.Y);
+
+                    pictureBox1.Image = img;
                 }
 
-                pictureBox1.Image = img;
+                if (drawMode == DrawMode.square)
+                {
+                    pt2.x = e.X;
+                    pt2.y = e.Y;
+
+                    img = new Bitmap(imgTemp);
+
+                    drawSquare();
+
+                    pictureBox1.Image = img;
+                }
+
+                if (drawMode == DrawMode.circle)
+                {
+                    pt2.x = e.X;
+                    pt2.y = e.Y;
+
+                    img = new Bitmap(imgTemp);
+
+                    drawCircle();
+
+                    pictureBox1.Image = img;
+                }
+
             }
         }
 
@@ -78,6 +105,7 @@ namespace ImageEditorWinForm
             {
                 pt1.x = e.X;
                 pt1.y = e.Y;
+                imgTemp = new Bitmap(img);
             }
 
             else if (drawMode == DrawMode.pen)
@@ -99,6 +127,7 @@ namespace ImageEditorWinForm
 
                 if (drawMode == DrawMode.square)
                 {
+                    img = imgTemp;
                     drawSquare();
                 }
 
@@ -124,7 +153,7 @@ namespace ImageEditorWinForm
 
         private void draw(int x, int y)
         {
-            if (x - drawWidth >= 0 && x + drawWidth < img.Width && y - drawWidth >= 0 && y + drawWidth < img.Height)
+            if (x - drawWidth / 2 >= 0 && x + drawWidth / 2 < img.Width && y - drawWidth / 2 >= 0 && y + drawWidth / 2 < img.Height)
             {
                 unsafe
                 {
@@ -151,8 +180,6 @@ namespace ImageEditorWinForm
 
                     img.UnlockBits(bitmapData);
                 }
-
-                pictureBox1.Image = img;
             }
         }
 
@@ -189,8 +216,7 @@ namespace ImageEditorWinForm
         {
             double r = Math.Sqrt(Math.Pow((pt1.x - pt2.x),2) + Math.Pow((pt1.y-pt2.y),2));
             double circ = 2 * Math.PI * r;
-
-            int numberOfPoints = (int)circ;
+            int numberOfPoints = (int)circ;            // / drawWidth * 2
             for (double theta = 0; theta < 2 * Math.PI; theta += 2*Math.PI/numberOfPoints)
             {
                 double x = pt1.x + r * Math.Cos(theta);
