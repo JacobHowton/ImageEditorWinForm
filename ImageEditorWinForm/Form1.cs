@@ -61,7 +61,7 @@ namespace ImageEditorWinForm
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (mouseIsDown && 0 + drawWidth / 2 < e.X && e.X < img.Width - drawWidth / 2 && 0 + drawWidth / 2 < e.Y && e.Y < img.Height - drawWidth / 2)
+            if (mouseIsDown && drawWidth / 2  <= e.X && e.X < img.Width - drawWidth / 2 && drawWidth / 2 <= e.Y && e.Y < img.Height - drawWidth / 2)
             {
                 if (drawMode == DrawMode.pen)
                 {
@@ -124,35 +124,36 @@ namespace ImageEditorWinForm
 
         private void draw(int x, int y)
         {
-
-            unsafe
+            if (x - drawWidth >= 0 && x + drawWidth < img.Width && y - drawWidth >= 0 && y + drawWidth < img.Height)
             {
-                BitmapData bitmapData = img.LockBits(new Rectangle(0, 0, img.Width, img.Height), ImageLockMode.ReadWrite, img.PixelFormat);
-                int bytesPerPixel = System.Drawing.Bitmap.GetPixelFormatSize(img.PixelFormat) / 8;
-                int heightInPixels = bitmapData.Height;
-                int widthInBytes = bitmapData.Width * bytesPerPixel;
-                byte* ptrFirstPixel = (byte*)bitmapData.Scan0;
-
-                for (int width = 0; width < drawWidth; width++)
+                unsafe
                 {
-                    int imgy = y - drawWidth / 2 + width;
+                    BitmapData bitmapData = img.LockBits(new Rectangle(0, 0, img.Width, img.Height), ImageLockMode.ReadWrite, img.PixelFormat);
+                    int bytesPerPixel = System.Drawing.Bitmap.GetPixelFormatSize(img.PixelFormat) / 8;
+                    int heightInPixels = bitmapData.Height;
+                    int widthInBytes = bitmapData.Width * bytesPerPixel;
+                    byte* ptrFirstPixel = (byte*)bitmapData.Scan0;
 
-                    byte* currentLine = ptrFirstPixel + (imgy * bitmapData.Stride);
-
-                    for (int height = 0; height < drawWidth; height ++)
+                    for (int width = 0; width < drawWidth; width++)
                     {
-                        int imgx = x - drawWidth / 2 + height;
-                        currentLine[imgx * bytesPerPixel] = (byte)colorDraw.B;
-                        currentLine[imgx * bytesPerPixel + 1] = (byte)colorDraw.G;
-                        currentLine[imgx * bytesPerPixel + 2] = (byte)colorDraw.R;
+                        int imgy = y - drawWidth / 2 + width;
+
+                        byte* currentLine = ptrFirstPixel + (imgy * bitmapData.Stride);
+
+                        for (int height = 0; height < drawWidth; height++)
+                        {
+                            int imgx = x - drawWidth / 2 + height;
+                            currentLine[imgx * bytesPerPixel] = (byte)colorDraw.B;
+                            currentLine[imgx * bytesPerPixel + 1] = (byte)colorDraw.G;
+                            currentLine[imgx * bytesPerPixel + 2] = (byte)colorDraw.R;
+                        }
                     }
+
+                    img.UnlockBits(bitmapData);
                 }
 
-                img.UnlockBits(bitmapData);
+                pictureBox1.Image = img;
             }
-
-            pictureBox1.Image = img;
-
         }
 
 
