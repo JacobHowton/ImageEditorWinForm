@@ -102,6 +102,11 @@ namespace ImageEditorWinForm
                     drawSquare();
                 }
 
+                else if (drawMode == DrawMode.circle)
+                {
+                    drawCircle();
+                }
+
 
                 pictureBox1.Image = img;
             }
@@ -179,9 +184,18 @@ namespace ImageEditorWinForm
             }
         }
 
-        private void drawCircle(Bitmap processedBitmap)
+        private void drawCircle()
         {
-            
+            double r = Math.Sqrt(Math.Pow((pt1.x - pt2.x),2) + Math.Pow((pt1.y-pt2.y),2));
+
+            for (int x = -Math.Abs(pt1.x - pt2.x); x < Math.Abs(pt1.x - pt2.x); x++)
+            {
+                int y = (int)Math.Sqrt(Math.Pow(r, 2) - Math.Pow(x,2));
+                draw(x + pt1.x, (int)y + pt1.y);
+
+                y = -(int)Math.Sqrt(Math.Pow(r, 2) - Math.Pow(x, 2));
+                draw(x + pt1.x, (int)y + pt1.y);
+            }
         }
 
         private void fill(int x, int y)
@@ -301,8 +315,6 @@ namespace ImageEditorWinForm
         private void btn_circle_Click(object sender, EventArgs e)
         {
             drawMode = DrawMode.circle;
-            drawCircle(img);
-
         }
 
         private void btn_fill_Click(object sender, EventArgs e)
