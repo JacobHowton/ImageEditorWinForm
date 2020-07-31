@@ -188,14 +188,15 @@ namespace ImageEditorWinForm
         private void drawCircle()
         {
             double r = Math.Sqrt(Math.Pow((pt1.x - pt2.x),2) + Math.Pow((pt1.y-pt2.y),2));
+            double circ = 2 * Math.PI * r;
 
-            for (int x = -Math.Abs(pt1.x - pt2.x); x < Math.Abs(pt1.x - pt2.x); x++)
+            int numberOfPoints = (int)circ;
+            for (double theta = 0; theta < 2 * Math.PI; theta += 2*Math.PI/numberOfPoints)
             {
-                int y = (int)Math.Sqrt(Math.Pow(r, 2) - Math.Pow(x,2));
-                draw(x + pt1.x, (int)y + pt1.y);
+                double x = pt1.x + r * Math.Cos(theta);
+                double y = pt1.y + r * Math.Sin(theta);
 
-                y = -(int)Math.Sqrt(Math.Pow(r, 2) - Math.Pow(x, 2));
-                draw(x + pt1.x, (int)y + pt1.y);
+                draw((int)x, (int)y);
             }
         }
 
