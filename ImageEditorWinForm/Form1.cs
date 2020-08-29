@@ -366,5 +366,22 @@ namespace ImageEditorWinForm
                 tb_drawWidth.Text = "1";
             }
         }
+
+        private void btn_save_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                Bitmap b = new Bitmap(img);
+
+                b.Save("img.jpg");
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
     }
 }

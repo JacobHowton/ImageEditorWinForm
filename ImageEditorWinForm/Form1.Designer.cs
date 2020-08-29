@@ -38,6 +38,7 @@
             this.btn_circle = new System.Windows.Forms.Button();
             this.btn_fill = new System.Windows.Forms.Button();
             this.tb_drawWidth = new System.Windows.Forms.TextBox();
+            this.btn_save = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorWheel)).BeginInit();
@@ -143,11 +144,22 @@
             this.tb_drawWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tb_drawWidth.TextChanged += new System.EventHandler(this.tb_drawWidth_TextChanged);
             // 
+            // btn_save
+            // 
+            this.btn_save.Location = new System.Drawing.Point(770, 221);
+            this.btn_save.Name = "btn_save";
+            this.btn_save.Size = new System.Drawing.Size(75, 23);
+            this.btn_save.TabIndex = 9;
+            this.btn_save.Text = "Save";
+            this.btn_save.UseVisualStyleBackColor = true;
+            this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(913, 450);
+            this.Controls.Add(this.btn_save);
             this.Controls.Add(this.tb_drawWidth);
             this.Controls.Add(this.btn_fill);
             this.Controls.Add(this.btn_circle);
@@ -178,6 +190,7 @@
         private System.Windows.Forms.Button btn_circle;
         private System.Windows.Forms.Button btn_fill;
         private System.Windows.Forms.TextBox tb_drawWidth;
+        private System.Windows.Forms.Button btn_save;
     }
 }
 
