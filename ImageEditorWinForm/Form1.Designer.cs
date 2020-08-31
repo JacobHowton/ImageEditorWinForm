@@ -39,6 +39,7 @@
             this.btn_fill = new System.Windows.Forms.Button();
             this.tb_drawWidth = new System.Windows.Forms.TextBox();
             this.btn_save = new System.Windows.Forms.Button();
+            this.txbx_saveLocation = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorWheel)).BeginInit();
@@ -91,7 +92,7 @@
             // 
             // btn_pen
             // 
-            this.btn_pen.Location = new System.Drawing.Point(779, 119);
+            this.btn_pen.Location = new System.Drawing.Point(779, 108);
             this.btn_pen.Margin = new System.Windows.Forms.Padding(2);
             this.btn_pen.Name = "btn_pen";
             this.btn_pen.Size = new System.Drawing.Size(56, 19);
@@ -102,7 +103,7 @@
             // 
             // btn_square
             // 
-            this.btn_square.Location = new System.Drawing.Point(779, 143);
+            this.btn_square.Location = new System.Drawing.Point(779, 132);
             this.btn_square.Margin = new System.Windows.Forms.Padding(2);
             this.btn_square.Name = "btn_square";
             this.btn_square.Size = new System.Drawing.Size(56, 19);
@@ -114,7 +115,7 @@
             // btn_circle
             // 
             this.btn_circle.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_circle.Location = new System.Drawing.Point(779, 167);
+            this.btn_circle.Location = new System.Drawing.Point(779, 156);
             this.btn_circle.Margin = new System.Windows.Forms.Padding(2);
             this.btn_circle.Name = "btn_circle";
             this.btn_circle.Size = new System.Drawing.Size(56, 19);
@@ -126,7 +127,7 @@
             // btn_fill
             // 
             this.btn_fill.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_fill.Location = new System.Drawing.Point(779, 190);
+            this.btn_fill.Location = new System.Drawing.Point(779, 179);
             this.btn_fill.Margin = new System.Windows.Forms.Padding(2);
             this.btn_fill.Name = "btn_fill";
             this.btn_fill.Size = new System.Drawing.Size(56, 19);
@@ -154,11 +155,21 @@
             this.btn_save.UseVisualStyleBackColor = true;
             this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
             // 
+            // txbx_saveLocation
+            // 
+            this.txbx_saveLocation.Location = new System.Drawing.Point(754, 199);
+            this.txbx_saveLocation.Name = "txbx_saveLocation";
+            this.txbx_saveLocation.Size = new System.Drawing.Size(100, 20);
+            this.txbx_saveLocation.TabIndex = 10;
+            this.txbx_saveLocation.Text = "image.jpg";
+            this.txbx_saveLocation.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(913, 450);
+            this.Controls.Add(this.txbx_saveLocation);
             this.Controls.Add(this.btn_save);
             this.Controls.Add(this.tb_drawWidth);
             this.Controls.Add(this.btn_fill);
@@ -191,6 +202,7 @@
         private System.Windows.Forms.Button btn_fill;
         private System.Windows.Forms.TextBox tb_drawWidth;
         private System.Windows.Forms.Button btn_save;
+        private System.Windows.Forms.TextBox txbx_saveLocation;
     }
 }
 

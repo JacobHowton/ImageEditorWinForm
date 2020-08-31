@@ -374,7 +374,7 @@ namespace ImageEditorWinForm
 
                 Bitmap b = new Bitmap(img);
 
-                b.Save("img.jpg");
+                b.Save(txbx_saveLocation.Text);
 
             }
             catch (Exception ex)
