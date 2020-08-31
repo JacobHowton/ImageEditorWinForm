@@ -39,7 +39,7 @@
             this.btn_fill = new System.Windows.Forms.Button();
             this.tb_drawWidth = new System.Windows.Forms.TextBox();
             this.btn_save = new System.Windows.Forms.Button();
-            this.txbx_saveLocation = new System.Windows.Forms.TextBox();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorWheel)).BeginInit();
@@ -155,21 +155,11 @@
             this.btn_save.UseVisualStyleBackColor = true;
             this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
             // 
-            // txbx_saveLocation
-            // 
-            this.txbx_saveLocation.Location = new System.Drawing.Point(754, 199);
-            this.txbx_saveLocation.Name = "txbx_saveLocation";
-            this.txbx_saveLocation.Size = new System.Drawing.Size(100, 20);
-            this.txbx_saveLocation.TabIndex = 10;
-            this.txbx_saveLocation.Text = "image.jpg";
-            this.txbx_saveLocation.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(913, 450);
-            this.Controls.Add(this.txbx_saveLocation);
             this.Controls.Add(this.btn_save);
             this.Controls.Add(this.tb_drawWidth);
             this.Controls.Add(this.btn_fill);
@@ -202,7 +192,7 @@
         private System.Windows.Forms.Button btn_fill;
         private System.Windows.Forms.TextBox tb_drawWidth;
         private System.Windows.Forms.Button btn_save;
-        private System.Windows.Forms.TextBox txbx_saveLocation;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

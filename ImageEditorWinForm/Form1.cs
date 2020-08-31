@@ -369,12 +369,15 @@ namespace ImageEditorWinForm
 
         private void btn_save_Click(object sender, EventArgs e)
         {
+
+            saveFileDialog1.ShowDialog();
+            string fname = saveFileDialog1.FileName;
             try
             {
 
                 Bitmap b = new Bitmap(img);
 
-                b.Save(txbx_saveLocation.Text);
+                b.Save(fname);
 
             }
             catch (Exception ex)
