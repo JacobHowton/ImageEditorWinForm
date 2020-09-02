@@ -40,6 +40,8 @@
             this.tb_drawWidth = new System.Windows.Forms.TextBox();
             this.btn_save = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.btn_load = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorWheel)).BeginInit();
@@ -160,11 +162,26 @@
             this.saveFileDialog1.Filter = "JPeg Image|*.jpg|Bitmap Image|*.bmp";
             this.saveFileDialog1.Tag = "jpg";
             // 
+            // btn_load
+            // 
+            this.btn_load.Location = new System.Drawing.Point(770, 198);
+            this.btn_load.Name = "btn_load";
+            this.btn_load.Size = new System.Drawing.Size(75, 23);
+            this.btn_load.TabIndex = 10;
+            this.btn_load.Text = "Load";
+            this.btn_load.UseVisualStyleBackColor = true;
+            this.btn_load.Click += new System.EventHandler(this.btn_load_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(913, 450);
+            this.Controls.Add(this.btn_load);
             this.Controls.Add(this.btn_save);
             this.Controls.Add(this.tb_drawWidth);
             this.Controls.Add(this.btn_fill);
@@ -198,6 +215,8 @@
         private System.Windows.Forms.TextBox tb_drawWidth;
         private System.Windows.Forms.Button btn_save;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Button btn_load;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

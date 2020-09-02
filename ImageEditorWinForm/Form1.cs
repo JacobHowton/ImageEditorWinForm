@@ -386,5 +386,22 @@ namespace ImageEditorWinForm
             }
 
         }
+
+        private void btn_load_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.ShowDialog();
+            string fname = openFileDialog1.FileName;
+
+            try
+            {
+                MessageBox.Show(fname);
+                pictureBox1.Image = Image.FromFile(fname);
+                img = new Bitmap(Image.FromFile(fname));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
