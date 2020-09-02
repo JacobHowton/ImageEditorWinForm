@@ -59,6 +59,7 @@ namespace ImageEditorWinForm
 
 
             pictureBox1.Image = img;
+            pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -394,10 +395,10 @@ namespace ImageEditorWinForm
 
             try
             {
-                MessageBox.Show(fname);
                 pictureBox1.Image = Image.FromFile(fname);
                 img = new Bitmap(Image.FromFile(fname));
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
