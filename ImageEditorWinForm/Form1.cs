@@ -155,6 +155,7 @@ namespace ImageEditorWinForm
             {
                 fill(e.X, e.Y);
             }
+            pictureBoxDisplayColor.BackColor = colorDraw;
         }
 
         private void draw(int x, int y)
@@ -334,6 +335,7 @@ namespace ImageEditorWinForm
             int y = pbColorWheel.Image.Height * e.Y / pbColorWheel.Height;
 
             colorDraw = ((Bitmap)pbColorWheel.Image).GetPixel(x, y);
+            pictureBoxDisplayColor.BackColor = colorDraw;
         }
 
         private void btn_pen_Click(object sender, EventArgs e)
@@ -414,5 +416,6 @@ namespace ImageEditorWinForm
         {
             drawMode = DrawMode.copyColor;
         }
+
     }
 }
