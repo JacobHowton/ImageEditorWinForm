@@ -22,7 +22,7 @@ namespace ImageEditorWinForm
         public int drawWidth;
         public Color colorDraw;
 
-        public enum DrawMode { pen, square, circle, fill };
+        public enum DrawMode { pen, square, circle, fill, copyColor};
         public DrawMode drawMode;
 
         public struct pt
@@ -112,6 +112,11 @@ namespace ImageEditorWinForm
             else if (drawMode == DrawMode.pen)
             {
                 draw(e.X, e.Y);
+            }
+
+            if (drawMode == DrawMode.copyColor)
+            {
+                colorDraw = ((Bitmap)pictureBox1.Image).GetPixel(e.X, e.Y);
             }
 
             pictureBox1.Image = img;
@@ -405,14 +410,9 @@ namespace ImageEditorWinForm
             }
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void btn_copyColor_MouseClick(object sender, MouseEventArgs e)
         {
-
-        }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
+            drawMode = DrawMode.copyColor;
         }
     }
 }
