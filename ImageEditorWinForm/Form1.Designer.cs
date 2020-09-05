@@ -44,22 +44,25 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btn_save = new System.Windows.Forms.Button();
             this.btn_copyColor = new System.Windows.Forms.Button();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBoxDisplayColor = new System.Windows.Forms.PictureBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorWheel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-            this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDisplayColor)).BeginInit();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlDark;
             this.pictureBox1.Location = new System.Drawing.Point(3, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(573, 444);
+            this.pictureBox1.Size = new System.Drawing.Size(680, 444);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
@@ -229,6 +232,17 @@
             this.btn_copyColor.UseVisualStyleBackColor = true;
             this.btn_copyColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btn_copyColor_MouseClick);
             // 
+            // pictureBoxDisplayColor
+            // 
+            this.pictureBoxDisplayColor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.pictureBoxDisplayColor.Location = new System.Drawing.Point(3, 303);
+            this.pictureBoxDisplayColor.MaximumSize = new System.Drawing.Size(20, 194);
+            this.pictureBoxDisplayColor.Name = "pictureBoxDisplayColor";
+            this.pictureBoxDisplayColor.Size = new System.Drawing.Size(14, 194);
+            this.pictureBoxDisplayColor.TabIndex = 12;
+            this.pictureBoxDisplayColor.TabStop = false;
+            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -246,17 +260,6 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(686, 450);
             this.tableLayoutPanel2.TabIndex = 12;
             // 
-            // pictureBoxDisplayColor
-            // 
-            this.pictureBoxDisplayColor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.pictureBoxDisplayColor.Location = new System.Drawing.Point(3, 303);
-            this.pictureBoxDisplayColor.MaximumSize = new System.Drawing.Size(20, 194);
-            this.pictureBoxDisplayColor.Name = "pictureBoxDisplayColor";
-            this.pictureBoxDisplayColor.Size = new System.Drawing.Size(14, 194);
-            this.pictureBoxDisplayColor.TabIndex = 12;
-            this.pictureBoxDisplayColor.TabStop = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -271,8 +274,8 @@
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbColorWheel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-            this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDisplayColor)).EndInit();
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
