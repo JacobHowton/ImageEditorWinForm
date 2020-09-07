@@ -417,5 +417,22 @@ namespace ImageEditorWinForm
             drawMode = DrawMode.copyColor;
         }
 
+
+        private void Form1_ResizeEnd(object sender, EventArgs e)
+        {
+            MessageBox.Show("Resizing..");
+
+            Bitmap img1 = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+
+            int x, y;
+            for (x = 0; x < img.Width; x++)
+            {
+                for (y = 0; y < img.Height; y++)
+                {
+                    img1.SetPixel(x, y, img.GetPixel(x, y));
+                }
+            }
+            img = img1;
+        }
     }
 }
