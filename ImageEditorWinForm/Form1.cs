@@ -59,7 +59,7 @@ namespace ImageEditorWinForm
 
 
             pictureBox1.Image = img;
-            pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
+            //pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -420,9 +420,11 @@ namespace ImageEditorWinForm
 
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
-            MessageBox.Show("Resizing..");
 
+            Console.WriteLine((img.Width).ToString() + " " + (img.Height).ToString());
+            Console.WriteLine((pictureBox1.Width).ToString() + " " + (pictureBox1.Height).ToString());
             Bitmap img1 = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+
 
             int x, y;
             for (x = 0; x < img.Width; x++)
@@ -432,7 +434,12 @@ namespace ImageEditorWinForm
                     img1.SetPixel(x, y, img.GetPixel(x, y));
                 }
             }
+
             img = img1;
+            pictureBox1.Image = img1;
+            pictureBox1.Size = new Size(pictureBox1.Width, pictureBox1.Height);
+
+            Console.WriteLine((img.Width).ToString() + " " + (img.Height).ToString());
         }
     }
 }
